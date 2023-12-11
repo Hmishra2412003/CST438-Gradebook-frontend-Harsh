@@ -78,31 +78,34 @@ function AddAssignment(props) {
 
     return (
         <div>
-            <button onClick={handleOpen}>Add Assignment</button>
+            <button id="addbutton2" onClick={handleOpen}>Add Assignment</button>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
                 <DialogTitle>Add Assignment</DialogTitle>
                 <DialogContent>
                     <TextField
                         label="Assignment Name"
+                        id='addassignmentname'
                         fullWidth
                         value={assignmentName}
                         onChange={(e) => setAssignmentName(e.target.value)}
                     />
                     <TextField
                         label="Due Date"
+                        id='addassignmentdate'
                         fullWidth
                         value={dueDate}
                         onChange={(e) => setDueDate(e.target.value)}
                     />
                     <TextField
                         label="Course ID" // Change the label to "Course ID"
+                        id='addassignmentid'
                         fullWidth
                         value={courseId}
                         onChange={(e) => setCourseId(e.target.value)} // Use the input value directly
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleSubmit}>Create Assignment</Button>
+                    <Button id="addbutton3" onClick={handleSubmit}>Create Assignment</Button>
                     <Button onClick={handleClose}>Close</Button>
                 </DialogActions>
             </Dialog>

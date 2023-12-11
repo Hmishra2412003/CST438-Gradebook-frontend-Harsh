@@ -94,12 +94,13 @@ function EditAssignment(props) {
 
     return (
         <div>
-            <button onClick={handleOpen}>Edit Assignment</button>
+            <button id='editassignmentbutton2' onClick={handleOpen}>Edit Assignment</button>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
                 <DialogTitle>Edit Assignment</DialogTitle>
                 <DialogContent>
                     <TextField
                         label="Assignment Name"
+                        id='newassignmentname'
                         name="assignmentName"
                         fullWidth
                         value={assignment.assignmentName}
@@ -121,7 +122,7 @@ function EditAssignment(props) {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleSubmit}>Save Changes</Button>
+                    <Button id ='submitedit' onClick={handleSubmit}>Save Changes</Button>
                     <Button onClick={handleClose}>Close</Button>
                 </DialogActions>
             </Dialog>

@@ -30,29 +30,31 @@ function ListAssignment(props) {
         closeModal();
     }
 
-    const handleDeleteAssignment = (assignmentId) => {
+    const handleDeleteAssignment = (assignmentId, hasGrades) => {
+        if (hasGrades) {
+            const confirmation = window.confirm(
+                'This assignment has grades. Deleting it will also delete associated grades. Are you sure you want to delete it?'
+            );
+            if (!confirmation) {
+                return; // Do nothing if the user cancels the deletion
+            }
+        }
+
         fetch(`${SERVER_URL}/assignment/${assignmentId}`, {
             method: 'DELETE',
         })
-            .then((response) => {if (response.ok){setMessage('assignment deleted')
-                fetchAssignments();
-
-            }
-            else {setMessage("Assignment delete failed")}
-            }
-            )
-            // .then((data) => {
-            //     if (data.success) {
-            //         const updatedAssignments = assignments.filter((assignment) => assignment.id !== assignmentId);
-            //         setAssignments(updatedAssignments);
-            //         fetchAssignments();
-            //     } else {
-            //         console.error('Failed to delete assignment:', data.error);
-            //     }
-            // })
+            .then((response) => {
+                if (response.ok) {
+                    setMessage('Assignment deleted');
+                    fetchAssignments();
+                } else {
+                    setMessage('Assignment delete failed');
+                }
+            })
             .catch((error) => {
                 console.error('Error deleting assignment:', error);
             });
+
 
     };
 
@@ -98,17 +100,17 @@ function ListAssignment(props) {
                                 <Link to={`/gradeAssignment/${assignments[idx].id}`}>Grade</Link>
                             </td>
                             <td>
-                                <button onClick={() => openModal('edit', assignments[idx])}>Edit</button>
+                                <button id='editassignmentbutton' onClick={() => openModal('edit', assignments[idx])}>Edit</button>
                             </td>
                             <td>
-                                <button onClick={() => handleDeleteAssignment(assignments[idx].id)}>Delete</button>
+                                <button id='deletebutton' onClick={() => handleDeleteAssignment(assignments[idx].id)}>Delete</button>
                             </td>
                         </tr>
                     ))}
                     </tbody>
                 </table>
                 <div>
-                    <button onClick={() => openModal('add', null)}>Add Assignment</button>
+                    <button id="addbutton1" onClick={() => openModal('add', null)}>Add Assignment</button>
                 </div>
             </div>
             {isModalOpen && (
