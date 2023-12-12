@@ -10,21 +10,27 @@ function ListAssignment(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalType, setModalType] = useState('');
     const [selectedAssignment, setSelectedAssignment] = useState(null); // Define selectedAssignment here
-
+const token =sessionStorage.getItem("jwt");
 
     useEffect(() => {
         fetchAssignments();
     }, []);
 
     const fetchAssignments = () => {
-        fetch(`${SERVER_URL}/assignment`)
-            .then((response) => response.json())
+        fetch(`${SERVER_URL}/assignment`, {
+            headers: {'Authorization': token}
+        })
+            .then((response) => {
+                console.log(response);
+                return response.json();
+            })
             .then((data) => {
-                console.log(data)
+                console.log(data);
                 setAssignments(data);
             })
             .catch((err) => console.error(err));
-    };
+    }
+
     const refresh = () => {
         console.log("Coming from dialog")
         closeModal();
@@ -42,6 +48,7 @@ function ListAssignment(props) {
 
         fetch(`${SERVER_URL}/assignment/${assignmentId}`, {
             method: 'DELETE',
+            headers: {'Authorization': token}
         })
             .then((response) => {
                 if (response.ok) {
@@ -58,7 +65,7 @@ function ListAssignment(props) {
 
     };
 
-    const headers = ['Assignment Name', 'Course Title', 'Due Date', '', '', ''];
+    const headers = ['Assignment Name', 'Course Title', 'Due Date',];
 
     const openModal = (type, assignment) => {
         setIsModalOpen(true);
